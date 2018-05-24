@@ -2,7 +2,7 @@
  * Create a list that holds all of your cards
  */
 var cardNodes = document.querySelectorAll('.card'); 
-var cardArr = Array.from(cards);
+var cardArr = Array.from(cardNodes);
 
 /*
  * Display the cards on the page
@@ -12,7 +12,7 @@ var cardArr = Array.from(cards);
  */
 var deckSpace = document.querySelector('.deck');
 shuffle(cardArr);
-for (var i = 0; i < cards.length; i++) {
+for (var i = 0; i < cardArr.length; i++) {
     deckSpace.appendChild(cardArr[i]);
 }
 
@@ -42,4 +42,62 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+var counter = 0;
+var movesCounter = document.querySelector('.moves').innerHTML = counter;
+var queueArr = new Array();
 
+        function flip(e, cardClass) {
+            if(cardClass === 'card open show') {
+                flipOver(e);
+            } else {
+                e.setAttribute('class','card open show');
+                addToQueue(e);
+            }
+        }
+
+        function addToQueue(e) {
+            if(queueArr.length < 2){
+                queueArr.push(e);
+            }
+        }
+
+        function lockInPlace(e) {
+            queueArr[0].setAttribute('class', 'card match');
+            queueArr[1].setAttribute('class', 'card match');
+        }
+
+        function flipOver(e = null) {
+            if(queueArr.length < 2) {
+                e.setAttribute('class', 'card');
+                queueArr.pop(e);
+            } else {
+                queueArr[0].setAttribute('class', 'card');
+                queueArr[1].setAttribute('class', 'card');
+                queueArr.pop(queueArr[0]);
+                queueArr.pop(queueArr[1]);
+            }
+        }
+
+cardNodes.forEach(function(elem){
+    elem.addEventListener('click', function(e) {
+        var cardClass = elem.getAttribute('class'); 
+        if(cardClass !== 'card match' && queueArr.length < 2) {
+            flip(elem, cardClass);
+        }
+        
+            if (queueArr.length === 2) {
+                setTimeout(function () {
+                    if (queueArr[0].isEqualNode(queueArr[1]) === true) {
+                        lockInPlace(elem);
+                        queueArr = [];
+                        counter++;
+                    } else {
+                        flipOver();
+                        queueArr = [];
+                        counter++;
+                    }
+                }, 2000)
+            }
+        
+    })
+})
