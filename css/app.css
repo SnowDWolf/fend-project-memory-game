@@ -107,3 +107,93 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+#congratsMod {
+    font-family: 'Coda', cursive;
+    padding: 280px;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 3em;
+}
+
+#congratsMod > h1 {
+    font-family: Verdana;
+    font-size: 1.6em;
+    font-weight: 600%;
+    padding: 0;
+    margin: 0;
+}
+
+#congratsMod > p {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    padding: 5px;
+    margin: 0;
+    color: #bfbfbf;
+}
+
+#congratsMod > div > .btn {
+    background-color: #02ccba;
+    width: 9em;
+    height: 2.5em;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.05em;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* credit for checkmark animation CSS: https://codepen.io/haniotis/pen/KwvYLO */
+.checkmark__circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 2;
+  stroke-miterlimit: 10;
+  stroke: #02ccba;
+  fill: none;
+  animation: stroke .6s cubic-bezier(0.650, 0.000, 0.450, 1.000) forwards;
+}
+
+.checkmark {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 2;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  margin: 10% auto;
+  box-shadow: inset 0px 0px 0px #02ccba;
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke .3s cubic-bezier(0.650, 0.000, 0.450, 1.000) .8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 30px #02ccba;
+  }
+}

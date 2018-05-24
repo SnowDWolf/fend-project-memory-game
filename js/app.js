@@ -43,40 +43,64 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 var counter = 0;
-var movesCounter = document.querySelector('.moves').innerHTML = counter;
+document.querySelector('.moves').innerHTML = counter;
 var queueArr = new Array();
+var starCounter = 0;
+var matchedCards = new Array();
 
-        function flip(e, cardClass) {
-            if(cardClass === 'card open show') {
-                flipOver(e);
-            } else {
-                e.setAttribute('class','card open show');
-                addToQueue(e);
-            }
-        }
+function flip(e, cardClass) {
+    if(cardClass === 'card open show') {
+        flipOver(e);
+    } else {
+        e.setAttribute('class','card open show');
+        addToQueue(e);
+    }
+}
 
-        function addToQueue(e) {
-            if(queueArr.length < 2){
-                queueArr.push(e);
-            }
-        }
+function addToQueue(e) {
+    if(queueArr.length < 2){
+        queueArr.push(e);
+    }
+}
 
-        function lockInPlace(e) {
-            queueArr[0].setAttribute('class', 'card match');
-            queueArr[1].setAttribute('class', 'card match');
-        }
+function lockInPlace(e) {
+    queueArr[0].setAttribute('class', 'card match');
+    queueArr[1].setAttribute('class', 'card match');
+}
 
-        function flipOver(e = null) {
-            if(queueArr.length < 2) {
-                e.setAttribute('class', 'card');
-                queueArr.pop(e);
-            } else {
-                queueArr[0].setAttribute('class', 'card');
-                queueArr[1].setAttribute('class', 'card');
-                queueArr.pop(queueArr[0]);
-                queueArr.pop(queueArr[1]);
-            }
-        }
+function flipOver(e = null) {
+    if(queueArr.length < 2) {
+        e.setAttribute('class', 'card');
+        queueArr.pop(e);
+    } else {
+        queueArr[0].setAttribute('class', 'card');
+        queueArr[1].setAttribute('class', 'card');
+        queueArr.pop(queueArr[0]);
+        queueArr.pop(queueArr[1]);
+    }
+}
+
+/* credit for checkmark animation SVG: https://codepen.io/haniotis/pen/KwvYLO */
+function youWon() {
+    var starsObtained = document.querySelectorAll('.fa-star').length;
+    if(matchedCards.length === 16){
+        document.querySelector('.container').innerHTML = `
+            <div id="congratsMod">
+            <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+            <header><h1>Congradulations! You Won!</h1></header>
+            <p>With` +` `+ counter +` `+ `Moves and `+ ` `+ starsObtained + ` ` +`Stars</p>
+            <p>Woooo!</p>
+            <div onclick="reload()"><button type="button" class="btn">Play Again?</button></div>
+            </div>
+        `;
+    }
+}
+
+function reload() {
+     window.location.reload(true);
+ }
 
 cardNodes.forEach(function(elem){
     elem.addEventListener('click', function(e) {
@@ -85,19 +109,37 @@ cardNodes.forEach(function(elem){
             flip(elem, cardClass);
         }
         
-            if (queueArr.length === 2) {
-                setTimeout(function () {
-                    if (queueArr[0].isEqualNode(queueArr[1]) === true) {
-                        lockInPlace(elem);
-                        queueArr = [];
-                        counter++;
-                    } else {
-                        flipOver();
-                        queueArr = [];
-                        counter++;
-                    }
-                }, 2000)
-            }
+        if (queueArr.length === 2) {
+            setTimeout(function () {
+                if (queueArr[0].isEqualNode(queueArr[1]) === true) {
+                    lockInPlace(elem);
+                    matchedCards.push(queueArr[0]); 
+                    matchedCards.push(queueArr[1]); 
+                    queueArr = [];
+                    counter++;
+                    starCounter++;
+                    document.querySelector('.moves').innerHTML = counter;
+                } else {
+                    flipOver();
+                    queueArr = [];
+                    counter++;
+                    starCounter++;
+                    document.querySelector('.moves').innerHTML = counter;
+                }
+                youWon(cardClass);
+            }, 2000)
+        }
         
+        if(cardArr.length % starCounter === 1){
+            if(queueArr[0].isEqualNode(queueArr[1]) === true) {
+                document.querySelector('.fa-star-o').setAttribute('class','fa fa-star');
+                starCounter = 0;    
+            }else {
+                document.querySelector('.fa-star').setAttribute('class','fa fa-star-o');
+            }
+        }else if(starCounter > cardArr.length) {
+            starCounter = 0;
+        }
+
     })
 })
