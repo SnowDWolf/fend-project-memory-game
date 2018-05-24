@@ -1,7 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-
+var cardNodes = document.querySelectorAll('.card'); 
+var cardArr = Array.from(cards);
 
 /*
  * Display the cards on the page
@@ -9,6 +10,11 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+var deckSpace = document.querySelector('.deck');
+shuffle(cardArr);
+for (var i = 0; i < cards.length; i++) {
+    deckSpace.appendChild(cardArr[i]);
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -36,3 +42,4 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
