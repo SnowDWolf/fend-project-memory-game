@@ -61,6 +61,8 @@ function flip(e, cardClass) {
 function addToQueue(e) {
     if(queueArr.length < 2){
         queueArr.push(e);
+        counter++;
+        document.querySelector('.moves').innerHTML = counter;
     }
 }
 
@@ -134,29 +136,34 @@ cardNodes.forEach(function(elem){
         if(cardClass !== 'card match' && queueArr.length < 2) {
             flip(elem, cardClass);
         }
+
         
-        if(counter % 4 === 0 && document.querySelector('.stary') !== null) {
-            document.querySelector('.stary').setAttribute('class','fa fa-star-o star');    
+        if(counter % 4 === 0 && document.querySelectorAll('.stary').length > 1) {
+            $('.stary:last').attr('class','fa fa-star-o star');    
         }  
+        
 
         if (queueArr.length === 2) {
             setTimeout(function () {
                 if (queueArr[0].isEqualNode(queueArr[1]) === true) {
                     lockInPlace(elem);
+                    
                     if(document.querySelector('.star') !== null){
                         document.querySelector('.star').setAttribute('class','fa fa-star stary');    
                     }
+
                     if(matchedCards.length < 15) {
                         matchedCards.push(queueArr[0]); 
                         matchedCards.push(queueArr[1]); 
                     }
+
                     queueArr = [];
-                    counter++;
+                    
                     document.querySelector('.moves').innerHTML = counter;
                 } else {
                     flipOver();
                     queueArr = [];
-                    counter++;
+
                     document.querySelector('.moves').innerHTML = counter;
                 }
                 youWon(cardClass);
