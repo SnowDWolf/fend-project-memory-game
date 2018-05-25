@@ -31,6 +31,7 @@ Flip a card and find its match in the deck stack.
 * Match all the cards in the deck
 * Beat your last time record
 * Beat your last star rating
+* Beat your last moves record
 
 ## Third Parties used <a name="thirdparties"></a>
 
