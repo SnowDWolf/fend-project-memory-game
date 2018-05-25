@@ -83,13 +83,13 @@ function flipOver(e = null) {
     }
 }
 
-/* credit for checkmark animation SVG: https://codepen.io/haniotis/pen/KwvYLO */
 function youWon() {
     var starsObtained = document.querySelectorAll('.fa-star').length;
     if(matchedCards.length === 16){
         timeState = false;
         var minutesTook = minCount;
         var secondsTook = secCount;
+        /* credit for checkmark animation SVG: https://codepen.io/haniotis/pen/KwvYLO */
         document.querySelector('.container').innerHTML = `
             <div id="congratsMod">
             <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
