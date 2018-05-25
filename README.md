@@ -2,19 +2,39 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
+* [About the project](#about)
 * [Contributing](#contributing)
+* [How to Play](#play)
+* [Rules to game](#rules)
+* [Win Conditions](#win)
+* [Third Parties used](#thirdparties)
 
-## Instructions
+## About the project
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+This is a project that utlizes the following languages:
+...* HTML
+...* CSS
+...* Javascript with a slight hint of jQuery. 
 
-To get started, open `js/app.js` and start building out the app's functionality
+Purpose of this project was to demonstrate the skills aquired in these languages so far.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+## How to play
 
-## Contributing
+Flip a card and find its match in the deck stack.
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+## Rules to game 
 
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+...* Once the first card is flipped, it stays flipped until you select another card 
+...* Every 4th failed match will result in losing a star
+
+## Win Conditions
+ 
+...* Match all the cards in the deck
+...* Beat your last time record
+...* Beat your last star rating
+
+## Third Parties used
+
+...* Google Fonts
+...* Font Awesome
+...* Other sources ( links in repository )
