@@ -1,8 +1,8 @@
 /*
  * Create a list that holds all of your cards
  */
-var cardNodes = document.querySelectorAll('.card'); 
-var cardArr = Array.from(cardNodes);
+let cardNodes = document.querySelectorAll('.card'); 
+let cardArr = Array.from(cardNodes);
 
 /*
  * Display the cards on the page
@@ -10,15 +10,15 @@ var cardArr = Array.from(cardNodes);
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-var deckSpace = document.querySelector('.deck');
+let deckSpace = document.querySelector('.deck');
 shuffle(cardArr);
-for (var i = 0; i < cardArr.length; i++) {
+for (let i = 0; i < cardArr.length; i++) {
     deckSpace.appendChild(cardArr[i]);
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -42,14 +42,14 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-var counter = 0;
+let counter = 0;
 document.querySelector('.moves').innerHTML = counter;
-var queueArr = new Array();
-var secCount = 0;
-var minCount = 0;
-var matchedCards = new Array();
-var timeState = false;
-var sec = 0;
+let queueArr = new Array();
+let secCount = 0;
+let minCount = 0;
+let matchedCards = new Array();
+let timeState = false;
+let sec = 0;
 
 function flip(e, cardClass) {
     if(cardClass !== 'card open show'){
@@ -84,11 +84,11 @@ function flipOver(e = null) {
 }
 
 function youWon() {
-    var starsObtained = document.querySelectorAll('.fa-star').length;
+    let starsObtained = document.querySelectorAll('.fa-star').length;
     if(matchedCards.length === 16){
         timeState = false;
-        var minutesTook = minCount;
-        var secondsTook = secCount;
+        let minutesTook = minCount;
+        let secondsTook = secCount;
         /* 
         * Credit for checkmark animation SVG: https://codepen.io/haniotis/pen/KwvYLO 
         * utlized string literal to inject SVG animation into win module
@@ -132,7 +132,7 @@ setInterval( function time(){
 
 cardNodes.forEach(function(elem){
     elem.addEventListener('click', function(e) {
-        var cardClass = elem.getAttribute('class'); 
+        let cardClass = elem.getAttribute('class'); 
         if(cardClass !== 'card match' && queueArr.length < 2) {
             flip(elem, cardClass);
         }
