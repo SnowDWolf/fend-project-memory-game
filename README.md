@@ -18,22 +18,22 @@ This is a project that utlizes the following languages:
 Purpose of this project was to demonstrate the skills aquired in these languages so far.
 
 ## How to play <a name="play"></a>
-(#play)
+
 Flip a card and find its match in the deck stack.
 
 ## Rules to game <a name="rules"></a>
-(#rules)
+
 ...* Once the first card is flipped, it stays flipped until you select another card 
 ...* Every 4th failed match will result in losing a star
 
 ## Win Conditions <a name="win"></a>
- (#win)
+
 ...* Match all the cards in the deck
 ...* Beat your last time record
 ...* Beat your last star rating
 
 ## Third Parties used <a name="thirdparties"></a>
-(#thirdparties)     
+
 ...* Google Fonts
 ...* Font Awesome
 ...* Other sources ( links in repository )
