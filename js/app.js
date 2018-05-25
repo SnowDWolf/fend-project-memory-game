@@ -45,8 +45,11 @@ function shuffle(array) {
 var counter = 0;
 document.querySelector('.moves').innerHTML = counter;
 var queueArr = new Array();
-var starCounter = 0;
+var secCount = 0;
+var minCount = 0;
 var matchedCards = new Array();
+var timeState = false;
+var sec = 0;
 
 function flip(e, cardClass) {
     if(cardClass === 'card open show') {
@@ -84,13 +87,16 @@ function flipOver(e = null) {
 function youWon() {
     var starsObtained = document.querySelectorAll('.fa-star').length;
     if(matchedCards.length === 16){
+        timeState = false;
+        var minutesTook = minCount;
+        var secondsTook = secCount;
         document.querySelector('.container').innerHTML = `
             <div id="congratsMod">
             <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
             <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
             <header><h1>Congradulations! You Won!</h1></header>
-            <p>With` +` `+ counter +` `+ `Moves and `+ ` `+ starsObtained + ` ` +`Stars</p>
+            <p>With` +` `+ counter +` `+ `Moves `+ ` `+ minutesTook + ` ` + `minutes and`+ ` ` + secondsTook + ` ` +     `seconds` +`</p>
             <p>Woooo!</p>
             <div onclick="reload()"><button type="button" class="btn">Play Again?</button></div>
             </div>
@@ -99,8 +105,32 @@ function youWon() {
 }
 
 function reload() {
-     window.location.reload(true);
- }
+    window.location.reload(true);
+}
+
+function timer ( val ) { 
+    return val > 9 ? val  : "0" + val; 
+}
+
+setInterval( function time(){
+     if(timeState === true) {
+        secCount = timer(++sec%60);
+        minCount = timer(parseInt(sec/60,10));
+        document.querySelector("#seconds").innerHTML= secCount;
+        document.querySelector("#minutes").innerHTML= minCount;
+        starChanger(secCount)
+     }
+ }, 1000);
+
+ function starChanger(starCount) {
+    if(starCount % counter === 1){
+        if(queueArr[0].isEqualNode(queueArr[1]) === true) {
+            document.querySelector('.fa-star-o').setAttribute('class','fa fa-star');    
+        }else {
+            document.querySelector('.fa-star').setAttribute('class','fa fa-star-o');    
+        }
+    }
+}
 
 cardNodes.forEach(function(elem){
     elem.addEventListener('click', function(e) {
@@ -113,32 +143,25 @@ cardNodes.forEach(function(elem){
             setTimeout(function () {
                 if (queueArr[0].isEqualNode(queueArr[1]) === true) {
                     lockInPlace(elem);
-                    matchedCards.push(queueArr[0]); 
-                    matchedCards.push(queueArr[1]); 
+                    if(matchedCards.length < 15) {
+                        matchedCards.push(queueArr[0]); 
+                        matchedCards.push(queueArr[1]); 
+                    }
                     queueArr = [];
                     counter++;
-                    starCounter++;
                     document.querySelector('.moves').innerHTML = counter;
                 } else {
                     flipOver();
                     queueArr = [];
                     counter++;
-                    starCounter++;
                     document.querySelector('.moves').innerHTML = counter;
                 }
                 youWon(cardClass);
             }, 2000)
         }
-        
-        if(cardArr.length % starCounter === 1){
-            if(queueArr[0].isEqualNode(queueArr[1]) === true) {
-                document.querySelector('.fa-star-o').setAttribute('class','fa fa-star');
-                starCounter = 0;    
-            }else {
-                document.querySelector('.fa-star').setAttribute('class','fa fa-star-o');
-            }
-        }else if(starCounter > cardArr.length) {
-            starCounter = 0;
+
+        if(timeState !== true) {
+            timeState = true;
         }
 
     })
