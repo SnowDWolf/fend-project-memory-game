@@ -52,9 +52,7 @@ var timeState = false;
 var sec = 0;
 
 function flip(e, cardClass) {
-    if(cardClass === 'card open show') {
-        flipOver(e);
-    } else {
+    if(cardClass !== 'card open show'){
         e.setAttribute('class','card open show');
         addToQueue(e);
     }
@@ -77,7 +75,7 @@ function flipOver(e = null) {
         queueArr.pop(e);
     } else {
         queueArr[0].setAttribute('class', 'card');
-        queueArr[1].setAttribute('class', 'card');
+        queueArr[1].setAttribute('class', 'card');    
         queueArr.pop(queueArr[0]);
         queueArr.pop(queueArr[1]);
     }
@@ -99,7 +97,7 @@ function youWon() {
             <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
             <header><h1>Congradulations! You Won!</h1></header>
-            <p>With` +` `+ counter +` `+ `Moves `+ ` `+ minutesTook + ` ` + `minutes and`+ ` ` + secondsTook + ` ` +     `seconds` +`</p>
+            <p>With` +` `+ counter +` `+ `Moves ` + ` ` + starsObtained + ` ` + `stars` + ` ` + minutesTook + ` ` + `minutes and`+ ` ` + secondsTook + ` ` + `seconds` + `</p>
             <p>Woooo!</p>
             <div onclick="reload()"><button type="button" class="btn">Play Again?</button></div>
             </div>
@@ -126,20 +124,9 @@ setInterval( function time(){
         minCount = timer(parseInt(sec/60,10));
         document.querySelector("#seconds").innerHTML= secCount;
         document.querySelector("#minutes").innerHTML= minCount;
-        starChanger(secCount)
      }
  }, 1000);
 /* end of credit */
-
- function starChanger(starCount) {
-    if(starCount % counter === 1){
-        if(queueArr[0].isEqualNode(queueArr[1]) === true) {
-            document.querySelector('.fa-star-o').setAttribute('class','fa fa-star');    
-        }else {
-            document.querySelector('.fa-star').setAttribute('class','fa fa-star-o');    
-        }
-    }
-}
 
 cardNodes.forEach(function(elem){
     elem.addEventListener('click', function(e) {
@@ -148,10 +135,17 @@ cardNodes.forEach(function(elem){
             flip(elem, cardClass);
         }
         
+        if(counter % 4 === 0 && document.querySelector('.stary') !== null) {
+            document.querySelector('.stary').setAttribute('class','fa fa-star-o star');    
+        }  
+
         if (queueArr.length === 2) {
             setTimeout(function () {
                 if (queueArr[0].isEqualNode(queueArr[1]) === true) {
                     lockInPlace(elem);
+                    if(document.querySelector('.star') !== null){
+                        document.querySelector('.star').setAttribute('class','fa fa-star stary');    
+                    }
                     if(matchedCards.length < 15) {
                         matchedCards.push(queueArr[0]); 
                         matchedCards.push(queueArr[1]); 
@@ -166,7 +160,7 @@ cardNodes.forEach(function(elem){
                     document.querySelector('.moves').innerHTML = counter;
                 }
                 youWon(cardClass);
-            }, 2000)
+            }, 1500)
         }
 
         if(timeState !== true) {

@@ -71,6 +71,13 @@ h1 {
     cursor: default;
 }
 
+
+.deck .card.bad {
+    font-size: 33px;
+    background: #ff0000;
+    cursor: default;
+}
+
 .deck .card.show {
     font-size: 33px;
 }
@@ -112,7 +119,7 @@ h1 {
     float: right;
     cursor: pointer;
 }
-
+    
 #congratsMod {
     font-family: 'Coda', cursive;
     padding: 280px;
