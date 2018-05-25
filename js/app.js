@@ -69,6 +69,11 @@ function addToQueue(e) {
 function lockInPlace(e) {
     queueArr[0].setAttribute('class', 'card match');
     queueArr[1].setAttribute('class', 'card match');
+    if(matchedCards.length < 15) {
+        matchedCards.push(queueArr[0]); 
+        matchedCards.push(queueArr[1]); 
+    }
+    queueArr = [];
 }
 
 function flipOver(e = null) {
@@ -80,6 +85,7 @@ function flipOver(e = null) {
         queueArr[1].setAttribute('class', 'card');    
         queueArr.pop(queueArr[0]);
         queueArr.pop(queueArr[1]);
+        queueArr = [];
     }
 }
 
@@ -111,6 +117,23 @@ function reload() {
     window.location.reload(true);
 }
 
+
+function isCardMatching(elem, cardClass) {
+    if (queueArr[0].isEqualNode(queueArr[1]) === true) {
+        lockInPlace(elem);
+        
+        if(document.querySelector('.star') !== null){
+            document.querySelector('.star').setAttribute('class','fa fa-star stary');    
+        }
+        
+        document.querySelector('.moves').innerHTML = counter;
+    } else {
+        setTimeout(flipOver, 1500);
+        document.querySelector('.moves').innerHTML = counter;
+    }
+    youWon(cardClass);
+}
+
 /*
 * Timer function w/ my own spin to intergrate with star functionality and click event 
 * credit for timer funtion: https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript 
@@ -135,41 +158,15 @@ cardNodes.forEach(function(elem){
         let cardClass = elem.getAttribute('class'); 
         if(cardClass !== 'card match' && queueArr.length < 2) {
             flip(elem, cardClass);
+            if (queueArr.length === 2) {            
+                isCardMatching(elem, cardClass);
+            }
         }
-
         
         if(counter % 4 === 0 && document.querySelectorAll('.stary').length > 1) {
             $('.stary:last').attr('class','fa fa-star-o star');    
         }  
         
-
-        if (queueArr.length === 2) {
-            setTimeout(function () {
-                if (queueArr[0].isEqualNode(queueArr[1]) === true) {
-                    lockInPlace(elem);
-                    
-                    if(document.querySelector('.star') !== null){
-                        document.querySelector('.star').setAttribute('class','fa fa-star stary');    
-                    }
-
-                    if(matchedCards.length < 15) {
-                        matchedCards.push(queueArr[0]); 
-                        matchedCards.push(queueArr[1]); 
-                    }
-
-                    queueArr = [];
-                    
-                    document.querySelector('.moves').innerHTML = counter;
-                } else {
-                    flipOver();
-                    queueArr = [];
-
-                    document.querySelector('.moves').innerHTML = counter;
-                }
-                youWon(cardClass);
-            }, 1500)
-        }
-
         if(timeState !== true) {
             timeState = true;
         }
