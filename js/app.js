@@ -89,7 +89,10 @@ function youWon() {
         timeState = false;
         var minutesTook = minCount;
         var secondsTook = secCount;
-        /* credit for checkmark animation SVG: https://codepen.io/haniotis/pen/KwvYLO */
+        /* 
+        * Credit for checkmark animation SVG: https://codepen.io/haniotis/pen/KwvYLO 
+        * utlized string literal to inject SVG animation into win module
+        */
         document.querySelector('.container').innerHTML = `
             <div id="congratsMod">
             <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -108,6 +111,11 @@ function reload() {
     window.location.reload(true);
 }
 
+/*
+* Timer function w/ my own spin to intergrate with star functionality and click event 
+* credit for timer funtion: https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript 
+*/
+
 function timer ( val ) { 
     return val > 9 ? val  : "0" + val; 
 }
@@ -121,6 +129,7 @@ setInterval( function time(){
         starChanger(secCount)
      }
  }, 1000);
+/* end of credit */
 
  function starChanger(starCount) {
     if(starCount % counter === 1){

@@ -162,7 +162,9 @@ h1 {
     cursor: pointer;
 }
 
-/* credit for checkmark animation CSS: https://codepen.io/haniotis/pen/KwvYLO */
+/* 
+* credit for checkmark animation CSS: https://codepen.io/haniotis/pen/KwvYLO 
+*/
 .checkmark__circle {
   stroke-dasharray: 166;
   stroke-dashoffset: 166;
