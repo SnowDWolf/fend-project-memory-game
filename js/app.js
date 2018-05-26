@@ -50,6 +50,7 @@ let minCount = 0;
 let matchedCards = new Array();
 let timeState = false;
 let sec = 0;
+var startTime = '';
 
 function flip(e, cardClass) {
     if(cardClass !== 'card open show'){
@@ -110,7 +111,7 @@ function youWon() {
             <div onclick="reload()"><button type="button" class="btn">Play Again?</button></div>
             </div>
         `;
-    }
+    } 
 }
 
 function reload() {
@@ -119,7 +120,7 @@ function reload() {
 
 
 function isCardMatching(elem, cardClass) {
-    if (queueArr[0].isEqualNode(queueArr[1]) === true) {
+    if (queueArr[0].isEqualNode(queueArr[1])) {
         lockInPlace(elem);
         
         if(document.querySelector('.star') !== null){
@@ -143,14 +144,23 @@ function timer ( val ) {
     return val > 9 ? val  : "0" + val; 
 }
 
-setInterval( function time(){
-     if(timeState === true) {
-        secCount = timer(++sec%60);
-        minCount = timer(parseInt(sec/60,10));
+function writeTime() {
+    let congratsNode = document.querySelector('#congratsMod');
+    if(!document.body.contains(congratsNode)){
         document.querySelector("#seconds").innerHTML= secCount;
         document.querySelector("#minutes").innerHTML= minCount;
-     }
- }, 1000);
+    } else {
+        clearInterval(startTime);
+    }
+}
+
+function time(){
+    secCount = timer(++sec%60);
+    minCount = timer(parseInt(sec/60,10));
+    if(timeState) {
+        writeTime();
+    }
+ }
 /* end of credit */
 
 cardNodes.forEach(function(elem){
@@ -167,8 +177,9 @@ cardNodes.forEach(function(elem){
             $('.stary:last').attr('class','fa fa-star-o star');    
         }  
         
-        if(timeState !== true) {
+        if(!timeState) {
             timeState = true;
+            startTime = setInterval(time, 1000);
         }
 
     })
