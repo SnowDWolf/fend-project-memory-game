@@ -129,6 +129,8 @@ function isCardMatching(elem, cardClass) {
         
         document.querySelector('.moves').innerHTML = counter;
     } else {
+        queueArr[0].setAttribute('class', 'card bad');
+        queueArr[1].setAttribute('class', 'card bad');
         setTimeout(flipOver, 1500);
         document.querySelector('.moves').innerHTML = counter;
     }
@@ -150,7 +152,7 @@ function writeTime() {
         document.querySelector("#seconds").innerHTML= secCount;
         document.querySelector("#minutes").innerHTML= minCount;
     } else {
-        clearInterval(startTime);
+        clearInterval(startTime);   
     }
 }
 
